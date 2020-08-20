@@ -100,12 +100,9 @@ export default {
     },
 
     created: function() {
-       
-       this.lx_uid = localStorage.getItem('ms_uid');
+        this.lx_uid = localStorage.getItem('ms_uid');
 
         console.log(this.lx_uid);
-      
-    
 
         this.getData_offDev();
         this.getPageData();
@@ -121,7 +118,11 @@ export default {
 
 <style scoped>
 .ms-title {
-    font-size: 14px;
+    /* font-size: 14px; */
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
 }
 </style>
 

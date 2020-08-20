@@ -19,19 +19,17 @@
                 <el-button
                     @click="func(scope.row.eid)"
                     type="text"
-                    style="font-size: 14px;"
+                   
                     size="small"
                 >查看数据</el-button>
                 <el-button
                     @click="func1(scope.row.eid)"
                     type="text"
-                    style="font-size: 14px;"
+                    
                     size="small"
                 >设备主页</el-button>
             </template>
-            <!-- <template slot-scope="scope">
-                <el-button @click="func1(scope.row.eid)" type="text" size="small">设备主页</el-button>
-            </template>-->
+           
         </el-table-column>
     </el-table>
 </template>
@@ -199,8 +197,7 @@ export default {
 <style scoped>
 .ms-title {
     /* font-size: 14px; */
-    font-size: 14px;
-    
+    /* font-size: 14px; */
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;

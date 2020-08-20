@@ -337,7 +337,7 @@ export default {
                 data: {
                     commond: '0110',
                     content: dmr_date,
-                    date: '123456789',
+                    date: new Date().toLocaleString(),
                     // deviceNum: '0002D102',
                     // etypecode: '25187',
                     deviceNum: this.eid3,
@@ -406,7 +406,7 @@ export default {
                 data: {
                     commond: '0110',
                     content: this.PrefixInteger(this.convert(this.bjxysj, 10, 16), 4),
-                    date: '123456789',
+                    date: new Date().toLocaleString(),
                     deviceNum: this.eid3,
                     etypecode: 25187,
                     iemi: '867665048501482',
@@ -446,7 +446,7 @@ export default {
                     data: {
                         commond: '0110',
                         content: '0000',
-                        date: '123456789',
+                        date: new Date().toLocaleString(),
                         // deviceNum: '0002D102',
                         // etypecode: '25187',
                         deviceNum: this.eid3,
@@ -491,7 +491,7 @@ export default {
                     data: {
                         commond: '0110',
                         content: '0001',
-                        date: '123456789',
+                        date: new Date().toLocaleString(),
                         // deviceNum: '0002D102',
                         // etypecode: '25187',
                         deviceNum: this.eid3,
@@ -533,7 +533,7 @@ export default {
                     data: {
                         commond: '0110',
                         content: '0002',
-                        date: '123456789',
+                        date: new Date().toLocaleString(),
                         // deviceNum: '0002D102',
                         // etypecode: '25187',
                         deviceNum: this.eid3,
@@ -581,7 +581,7 @@ export default {
                 data: {
                     commond: '0110',
                     content: this.content4,
-                    date: '123456789',
+                    date: new Date().toLocaleString(),
                     // deviceNum: '0002D102',
                     // etypecode: '25187',
                     deviceNum: this.eid3,
@@ -614,7 +614,7 @@ export default {
                     content: this.PrefixInteger(this.convert(this.cxjg, 10, 16), 4),
 
                     // content: this.val_ysh,
-                    date: '123456789',
+                    date: new Date().toLocaleString(),
                     // deviceNum: '0002D101',
                     // etypecode: '25187',
                     deviceNum: this.eid3,
@@ -645,7 +645,7 @@ export default {
                     content: this.PrefixInteger(this.convert(this.cxsj, 10, 16), 4),
 
                     // content: this.val_ysh,
-                    date: '123456789',
+                    date: new Date().toLocaleString(),
                     // deviceNum: '0002D101',
                     // etypecode: '25187',
                     deviceNum: this.eid3,
@@ -675,7 +675,7 @@ export default {
                     content: this.PrefixInteger(this.convert(this.xhsj, 10, 16), 4),
 
                     // content: this.val_ysh,
-                    date: '123456789',
+                    date: new Date().toLocaleString(),
                     // deviceNum: '0002D101',
                     // etypecode: '25187',
                     deviceNum: this.eid3,
@@ -705,7 +705,7 @@ export default {
                     content: this.PrefixInteger(this.convert(this.jpsj, 10, 16), 4),
 
                     // content: this.val_ysh,
-                    date: '123456789',
+                    date: new Date().toLocaleString(),
                     // deviceNum: '0002D101',
                     // etypecode: '25187',
                     deviceNum: this.eid3,
@@ -735,7 +735,7 @@ export default {
                     content: this.PrefixInteger(this.convert(this.cxsj1, 10, 16), 4),
 
                     // content: this.val_ysh,
-                    date: '123456789',
+                    date: new Date().toLocaleString(),
                     // deviceNum: '0002D101',
                     // etypecode: '25187',
                     deviceNum: this.eid3,
@@ -813,7 +813,7 @@ export default {
                 data: {
                     commond: '0110',
                     content: this.content1,
-                    date: '123456789',
+                    date: new Date().toLocaleString(),
                     // deviceNum: '0002D102',
                     // etypecode: '25187',
                     deviceNum: this.eid3,
@@ -1150,7 +1150,7 @@ li {
     margin-left: 20px;
     float: left;
     background: rgba(192, 192, 192);
-    width: 720px;
+    width: 800px;
     height: 550px;
 }
 

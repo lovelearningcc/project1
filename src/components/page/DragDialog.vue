@@ -444,7 +444,7 @@ export default {
                     data: {
                         commond: '0110',
                         content: this.content,
-                        date: '123456789',
+                        date: new Date().toLocaleString(),
                         // deviceNum: '0002D102',
                         // etypecode: '25187',
                         deviceNum: this.eid,
@@ -508,7 +508,7 @@ export default {
                     data: {
                         commond: '0110',
                         content: this.content,
-                        date: '123456789',
+                        date: new Date().toLocaleString(),
                         // deviceNum: '0002D102',
                         // etypecode: '25187',
                         deviceNum: this.eid,
@@ -579,7 +579,7 @@ export default {
                     data: {
                         commond: '0110',
                         content: this.content,
-                        date: '123456789',
+                        date: new Date().toLocaleString(),
                         // deviceNum: '0002D102',
                         // etypecode: '25187',
                         deviceNum: this.eid,
@@ -629,7 +629,7 @@ export default {
                     data: {
                         commond: '0110',
                         content: this.content,
-                        date: '123456789',
+                        date: new Date().toLocaleString(),
                         // deviceNum: '0002D102',
                         // etypecode: '25187',
                         deviceNum: this.eid,
@@ -673,7 +673,7 @@ export default {
                     data: {
                         commond: '0110',
                         content: this.content,
-                        date: '123456789',
+                        date: new Date().toLocaleString(),
                         deviceNum: this.eid,
                         etypecode: this.eypecode,
                         // deviceNum: '0002D102',
@@ -723,7 +723,7 @@ export default {
                     commond: '0110',
                     // content: '00000008001E',
                     content: this.convert(this.iysdd, 10, 16).padStart(4, '0'), //10转16并补够4位
-                    date: '123456789',
+                    date: new Date().toLocaleString(),
                     deviceNum: this.eid,
                     etypecode: '25187',
                     iemi: '867665048501482',
@@ -754,7 +754,7 @@ export default {
                     commond: '0110',
                     // content: '00000008001E',
                     content: this.convert(this.iyjnsdd, 10, 16).padStart(4, '0'), //10转16并补够4位
-                    date: '123456789',
+                    date: new Date().toLocaleString(),
                     deviceNum: this.eid,
                     etypecode: '25187',
                     iemi: '867665048501482',
@@ -784,7 +784,7 @@ export default {
                     commond: '0110',
                     // content: '00000008001E',
                     content: this.convert(this.iyjcsdd, 10, 16).padStart(4, '0'), //10转16并补够4位
-                    date: '123456789',
+                    date: new Date().toLocaleString(),
                     deviceNum: this.eid,
                     etypecode: '25187',
                     iemi: '867665048501482',
@@ -814,7 +814,7 @@ export default {
                     commond: '0110',
                     // content: '00000008001E',
                     content: this.convert(this.iejcsdd, 10, 16).padStart(4, '0'), //10转16并补够4位
-                    date: '123456789',
+                    date: new Date().toLocaleString(),
                     deviceNum: this.eid,
                     etypecode: '25187',
                     iemi: '867665048501482',
@@ -844,7 +844,7 @@ export default {
                     commond: '0110',
                     // content: '00000008001E',
                     content: this.convert(this.iyjcsll, 10, 16).padStart(4, '0'), //10转16并补够4位
-                    date: '123456789',
+                    date: new Date().toLocaleString(),
                     deviceNum: this.eid,
                     etypecode: '25187',
                     iemi: '123456',
@@ -874,7 +874,7 @@ export default {
                     commond: '0110',
                     // content: '00000008001E',
                     content: this.convert(this.iejcsll, 10, 16).padStart(4, '0'), //10转16并补够4位
-                    date: '123456789',
+                    date: new Date().toLocaleString(),
                     deviceNum: this.eid,
                     etypecode: '25187',
                     iemi: '867665048501482',
@@ -904,7 +904,7 @@ export default {
                     commond: '0110',
                     // content: '00000008001E',
                     content: this.convert(this.iyjfsll, 10, 16).padStart(4, '0'), //10转16并补够4位
-                    date: '123456789',
+                    date: new Date().toLocaleString(),
                     deviceNum: this.eid,
                     etypecode: '25187',
                     iemi: '867665048501482',
@@ -1564,15 +1564,15 @@ export default {
 .ys_fhan {
     /* float: left; */
     position: fixed;
-    width: 160px;
-    height: 60px;
-    background: #c0c0c0;
+    width: 145px;
+    height: 50px;
+    background: #2368da;
     font-size: 24px;
     /* margin-left: 20px; */
     margin-top: 20px;
     letter-spacing: 30px;
     text-indent: 30px;
-    font-weight: bold;
+    /* font-weight: bold; */
     /* font-family: SimSun; */
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
@@ -1581,4 +1581,6 @@ export default {
 
     /* border-radius: 15px; */
 }
+
+/* width:60px; height:30px; margin-left:10px; color:rgb(255, 255, 255); border: none; background-color: rgb(35, 104, 218); */
 </style>

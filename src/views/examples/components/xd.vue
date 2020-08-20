@@ -327,7 +327,7 @@ export default {
                 data: {
                     commond: '0110',
                     content: this.content1,
-                    date: '123456789',
+                    date: new Date().toLocaleString(),
                     // deviceNum: '0002D102',
                     // etypecode: '25187',
                     deviceNum: this.eid3,
@@ -382,7 +382,7 @@ export default {
                     data: {
                         commond: '0110',
                         content: this.content1,
-                        date: '123456789',
+                        date: new Date().toLocaleString(),
                         // deviceNum: '0002D102',
                         // etypecode: '25187',
                         deviceNum: this.eid3,
@@ -435,7 +435,7 @@ export default {
                     data: {
                         commond: '0110',
                         content: this.content2,
-                        date: '123456789',
+                        date: new Date().toLocaleString(),
                         // deviceNum: '0002D102',
                         // etypecode: '25187',
                         deviceNum: this.eid3,
@@ -492,7 +492,7 @@ export default {
                     data: {
                         commond: '0110',
                         content: this.content3,
-                        date: '123456789',
+                        date: new Date().toLocaleString(),
                         // deviceNum: '0002D102',
                         // etypecode: '25187',
                         deviceNum: this.eid3,

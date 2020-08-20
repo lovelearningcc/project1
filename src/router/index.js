@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-15 11:15:39
- * @LastEditTime: 2020-08-10 14:13:46
+ * @LastEditTime: 2020-08-12 11:59:14
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\src\router\index.js
@@ -25,13 +25,15 @@ export default new Router({
         {
             path: '/',
             component: () => import(/* webpackChunkName: "home" */ '../components/common/Home.vue'),
-            meta: { title: 'layout' }
-        },
+            meta: { title: 'layout' },
 
-        {
-            path: '/Tabs',
-            component: () => import(/* webpackChunkName: "Tabs" */ '@/components/page/Tabs.vue'),
-            meta: { title: '系统首页', keepAlive: true }
+            children: [
+                {
+                    path: '/Tabs',
+                    component: () => import(/* webpackChunkName: "Tabs" */ '@/components/page/Tabs.vue'),
+                    meta: { title: '系统首页', keepAlive: true }
+                }
+            ]
         },
 
         {

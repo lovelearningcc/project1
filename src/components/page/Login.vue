@@ -1,23 +1,31 @@
 <template>
     <div class="login-wrap">
         <div class="ms-login">
-            <div class="ms-title">测试平台DEMO</div>
-            <el-form :model="param" :rules="rules" ref="login" label-width="0px" class="ms-content">
-                <el-form-item prop="username">
-                    <el-input v-model="param.username" placeholder="username">
-                        <el-button slot="prepend" icon="el-icon-lx-people"></el-button>
-                    </el-input>
-                </el-form-item>
-                <el-form-item prop="password">
-                    <el-input
-                        type="password"
-                        placeholder="password"
-                        v-model="param.password"
-                        @keyup.enter.native="submitForm()"
-                    >
-                        <el-button slot="prepend" icon="el-icon-lx-lock"></el-button>
-                    </el-input>
-                </el-form-item>
+            <!-- <div class="ms-title">欢迎登录</div> -->
+
+            <el-form :model="param" :rules="rules" ref="login">
+                <div class="ms-title">欢迎登录</div>
+
+                <div class="putinfo">
+                    <el-form-item prop="username">
+                        <el-input v-model="param.username" placeholder="username">
+                            <el-button slot="prepend" icon="el-icon-lx-people"></el-button>
+                        </el-input>
+                    </el-form-item>
+                </div>
+
+                <div class="putinfo">
+                    <el-form-item prop="password">
+                        <el-input
+                            type="password"
+                            placeholder="password"
+                            v-model="param.password"
+                            @keyup.enter.native="submitForm()"
+                        >
+                            <el-button class="ys_input" slot="prepend" icon="el-icon-lx-lock"></el-button>
+                        </el-input>
+                    </el-form-item>
+                </div>
                 <div class="login-btn">
                     <el-button type="primary" @click="submitForm()">登录</el-button>
                 </div>
@@ -46,11 +54,11 @@ export default {
     },
 
     methods: {
-        submitForm() {   //登录按钮
-            console.log('denglu ')
+        submitForm() {
+            //登录按钮
+            console.log('denglu ');
 
             this.getuid(); //获取uid
-
 
             // this.$router.push({
             //                     path: '/Tabs',
@@ -70,14 +78,13 @@ export default {
                         }
                     }).then(({ data = {} }) => {
                         if (data.code === 0) {
-                           
                             this.$router.push({
                                 path: '/Tabs',
                                 query: {
                                     uid: this.uid
                                 }
                             });
-                            
+
                             console.log('2020.4.5登录成功！！！');
 
                             localStorage.setItem('ms_username', this.param.username);
@@ -103,12 +110,9 @@ export default {
                 }
             }).then(({ data = {} }) => {
                 if (data.code === 0) {
-                     
-
                     this.uid = data.data.uid;
 
-                     localStorage.setItem('ms_uid', this.uid);
-
+                    localStorage.setItem('ms_uid', this.uid);
 
                     console.log('2020.7.6请求uid成功！！！');
                     console.log(data.data);
@@ -118,12 +122,10 @@ export default {
         }
     },
 
- 
-
     created: function() {
         this.getuid(); //获取uid
     }
-}
+};
 </script>
 
 <style scoped>
@@ -145,28 +147,60 @@ export default {
 }
 .ms-login {
     position: fixed;
-    left: 50%;
-    top: 50%;
+    left: 35%;
+    top: 30%;
     width: 510px;
-    margin: -190px 0 0 -175px;
+    height: 300px;
+    margin: -190px 100 100 -175px;
     border-radius: 5px;
     background: rgba(255, 255, 255, 0.3);
+    /* z-index: 100; */
     overflow: hidden;
 }
-.ms-content {
-    padding: 30px 30px;
-}
+/* .ms-content {
+    padding: 60px 30px;
+} */
 .login-btn {
     text-align: center;
+    margin-top: 20px;
 }
 .login-btn button {
-    width: 100%;
-    height: 36px;
+    width: 80%;
+    height: 40px;
     margin-bottom: 10px;
 }
 .login-tips {
     font-size: 14px;
     line-height: 30px;
     color: #fff;
+}
+
+/* .ys_input {
+    width: 100%;
+    height: 40px;
+}
+
+.ys_input1 {
+    width: 100%;
+    height: 40px;
+} */
+
+.el-form-item {
+    margin-bottom: 1vw;
+    
+
+}
+.putinfo {
+    position: relative;
+    width: 80%;
+    left: 10%;
+    margin-top: 20px;
+    line-height: 20px;
+    height: 40px;
+}
+
+.title {
+    margin-top: -4%;
+    margin-bottom: 3%;
 }
 </style>

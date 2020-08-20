@@ -82,7 +82,7 @@ export default {
         },
 
         xdms() {
-            if (this.zs_Flag1 == true) {
+            if (this.zs_Flag1) {
                 console.log('点击消毒模式按钮');
 
                 console.log('zs_Flag----', this.zs_Flag);
@@ -182,7 +182,7 @@ export default {
         console.log('this.cx_Flag', this.cx_Flag);
         console.log('this.cx_Flag1', this.cx_Flag1);
 
-        if (this.xd_Flag1==true || this.cx_Flag1==true) {
+        if (this.xd_Flag1 == true || this.cx_Flag1 == true) {
             this.dqzt2 = true;
 
             console.log('this.dqzt2', this.dqzt2);

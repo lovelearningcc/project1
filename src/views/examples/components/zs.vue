@@ -104,6 +104,12 @@
                     :class="current4?'open':'close'"
                     @click="btn_zcd"
                 >{{current4?'主菜单':'主菜单'}}</li>
+
+                <li
+                    class="item1"
+                    :class="current5?'open':'close'"
+                    @click="ysqd"
+                >{{current5?'取消':'确定'}}</li>
             </ul>
         </div>
 
@@ -113,9 +119,21 @@
             <el-input class="yssj0" type="text" v-model="yssj" />
         </div>
 
-        <div class="yssj-btn">
-            <button class="ysan" type="primary" @click="ysqd()">确 定</button>
+        <div class="ys_jy">
+            将于
+            <span class="ys_jy1">{{val_min}}</span>
         </div>
+
+        <div class="ys_m">
+            ：
+            <span>{{val_sec}}</span>
+        </div>
+
+        <div class="ys_h">后停止制水</div>
+
+        <!-- <div class="yssj-btn"> -->
+        <!-- <button class="ysan" type="primary" @click="ysqd()">确 定</button> -->
+        <!-- </div> -->
         <div class="radio_ys">
             <label>
                 <input v-model="radioVal" type="radio" value="0" @change="getRadioVal1" />自动
@@ -127,24 +145,36 @@
                 <input v-model="radioVal" type="radio" value="2" @change="getRadioVal3" />夜间模式
             </label>
         </div>
+
+        <!-- <div class="verification-code" @click="sendCode()">{{text}}</div> -->
     </div>
 </template>
 
 <script>
 import { http } from '@/utils/request';
 export default {
+    name: 'VerificationCodeButton',
     data: function() {
         return {
             // radioVal1: '1', // 用于设置默认选中项
             // radioVal2: "0", // 用于设置默认选中项
             // radioVal3: '0', // 用于设置默认选中项
 
-            count: '',
+            text: '',
+            isClick: true,
+            // countdown: 60,
+            // timer: null,
+
+            val_min: '3',
+            val_sec: '60',
+            count: 0,
 
             ystzzs_flag: false,
             val_ystzzs: '', //延时停止制水使能命令（0000/0001）
 
-            yssj: '',
+            countTime: '',
+            _interval: '',
+            yssj: '', //延时制水时间
             state: '',
             radioVal: '0',
 
@@ -160,7 +190,7 @@ export default {
             // current2: false,
             // current3: false,
             current4: false,
-            // current5: false,
+            current5: false,
             // current6: false,
 
             hl: false,
@@ -301,6 +331,7 @@ export default {
 
             timer: null, // 定时器名称
             timer1: null, // 定时器名称
+            timer3: null,
 
             // img: '',
 
@@ -319,6 +350,37 @@ export default {
     },
 
     methods: {
+        // 倒计时事件
+        countdown() {
+            const that = this;
+            this.countTime = this.yssj * 60;
+            that._interval = setInterval(() => {
+                if (that.countTime == 0) {
+                    // 计时结束，清除缓存
+                    clearInterval(that._interval);
+                } else {
+                    that.countTime--;
+                    let day = parseInt(that.countTime / 60 / 60 / 24);
+                    let hr = parseInt((that.countTime / 60 / 60) % 24);
+                    let min = parseInt((that.countTime / 60) % 60);
+                    let sec = parseInt(that.countTime % 60);
+
+                    this.val_min = parseInt(that.countTime / 60);
+                    this.val_sec = parseInt(that.countTime % 60);
+
+                    day = day > 9 ? day : '0' + day;
+                    hr = hr > 9 ? hr : '0' + hr;
+                    min = min > 9 ? min : '0' + min;
+                    sec = sec > 9 ? sec : '0' + sec;
+
+                    this.val_min = this.val_min > 9 ? this.val_min : '0' + this.val_min;
+                    this.val_sec = this.val_sec > 9 ? this.val_sec : '0' + this.val_sec;
+
+                    // that.toLiveBtn = `${day}天${hr}时${min}分${sec}秒`;
+                }
+            }, 1000);
+        },
+
         convert(num, from, to) {
             //10转16
             var pattern = /^(2|8|10|16){1}$/;
@@ -383,7 +445,7 @@ export default {
                 data: {
                     commond: '0110',
                     content: this.content1,
-                    date: '123456789',
+                    date: new Date().toLocaleString(),
                     // deviceNum: '0002D102',
                     // etypecode: '25187',
                     deviceNum: this.eid2,
@@ -408,12 +470,19 @@ export default {
 
         //延时制水时间点击事件
         ysqd() {
+            this.current5 = !this.current5;
             if (this.ystzzs_flag) {
                 this.val_ystzzs = '0000' + this.PrefixInteger(this.convert(this.yssj, 10, 16), 4);
+
+                console.log('00000000000000000000000000000');
             } else {
                 this.val_ystzzs = '0001' + this.PrefixInteger(this.convert(this.yssj, 10, 16), 4);
+
+                console.log('111111111111111111111111111111111111111');
+                this.countdown();
             }
 
+            // console.log('val ————————', val);
             console.log('this.val_ystzzs ————', this.val_ystzzs);
             http({
                 url: '/appEquiment/customMessage',
@@ -421,7 +490,7 @@ export default {
                 data: {
                     commond: '0110',
                     content: this.val_ystzzs,
-                    date: '123456789',
+                    date: new Date().toLocaleString(),
                     // deviceNum: '0002D102',
                     // etypecode: '25187',
                     deviceNum: this.eid2,
@@ -445,7 +514,7 @@ export default {
         btn_zs() {
             console.log('开始点击制水按钮。。。。');
 
-            if (this.cx_Falg || this.cx_Falg1 || this.xd_Falg || this.xd_Falg1) {
+            if (this.cx_Falg1 == true || this.xd_Falg1 == true) {
                 this.$message.success('当前不能点击制水按钮');
             } else {
                 this.current1 = !this.current1;
@@ -480,7 +549,7 @@ export default {
                     data: {
                         commond: '0110',
                         content: this.content1,
-                        date: '123456789',
+                        date: new Date().toLocaleString(),
                         // deviceNum: '0002D102',
                         // etypecode: '25187',
                         deviceNum: this.eid2,
@@ -560,7 +629,7 @@ export default {
             console.log('开始请求数据！！！！！！');
             // console.log('this.eid2 ==  ', this.eid2);
 
-            this.loading = true;
+            // this.loading = true;
             this.$axios({
                 method: 'post',
                 url: '/appEquiment/selectDataByeid', //获取心跳包
@@ -594,11 +663,16 @@ export default {
                         if (value6 == '1') {
                             this.ystzzs_flag = true;
                             this.yssj = value7;
-                            this.count = value7;
+                            this.countdown();
+                            // this.count = value7;
+                            // this.val_min = value7;
+                            this.current5 = true;
                         } else {
                             this.ystzzs_flag = false;
                             this.yssj = value7;
-                            this.count = value7;
+                            // this.count = value7;
+                            this.current5 = false;
+                            // this.val_sec = value7;
                         }
 
                         console.log('实时接收——this.yssj---', this.yssj);
@@ -608,11 +682,7 @@ export default {
                         //工作模式
                         if (value1 == '0') {
                             this.work_mode = '双级反渗';
-                            this.work_mode1 = '0.8';
-
-                            // this.radioVal = '0';
-
-                            // this.current1 = false;
+                            this.work_mode1 = '0.8'
 
                             let url = 'have.png';
                             // this.imgUrl1 = '@/assets/img/have.png';   ("@/assets/img/" + have.png);
@@ -649,7 +719,7 @@ export default {
 
                             this.work_mode == '二级反渗';
                             this.work_mode1 == '1.2';
-                            this.radioVal = '2';
+                            // this.radioVal = '2';
 
                             this.imgUrl1 = 'http://212.64.37.240:8080/dmrbell/have.png';
                             this.imgUrl4 = 'http://212.64.37.240:8080/dmrbell/have.png';
@@ -830,7 +900,7 @@ export default {
                             this.zs_flag1 = true;
                             // this.zs_flag = true;
 
-                            this.radioVal = 2;
+                            // this.radioVal = 2;
                             // this.szs = true;
                         } else {
                             this.current1 = false;
@@ -971,7 +1041,7 @@ export default {
                     }
                 }
             });
-            this.loading = false;
+            // this.loading = false;
         },
 
         setTimer() {
@@ -980,7 +1050,6 @@ export default {
                     this.getdata();
 
                     this.flagTime = true;
-                   
                 }, 30000);
             }
         }
@@ -990,6 +1059,8 @@ export default {
         console.log('6666666666666666666666666666666666');
 
         console.log('制水界面接收传参成功！！！');
+
+        // this.sendCode();
 
         this.xd_Falg = localStorage.getItem('ms_xd');
         this.xd_Falg1 = localStorage.getItem('ms_xd1');
@@ -1009,6 +1080,10 @@ export default {
 
         this.getdata();
         this.setTimer();
+
+        console.log('延时制水时间设置——————————');
+
+        // this.countdown();
     },
 
     destroyed: function() {
@@ -1021,6 +1096,7 @@ export default {
 
 <style scoped>
 ul {
+    position: fixed;
     width: 100px;
     height: 100px;
     /* margin-top: 150px; */
@@ -1041,6 +1117,25 @@ ul {
     font-weight: bold;
     font-family: SimSun;
     border-radius: 15px;
+}
+
+.item1 {
+    /* position: fixed; */
+    font-size: 14px;
+    height: 35px;
+    width: 60px;
+    border-radius: 15px;
+    margin-top: 69px;
+    margin-left: 300px;
+    text-align: center;
+    list-style: none;
+    line-height: 35px;
+    /* z-index: 100; */
+    font-weight: bold;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
 }
 
 .open {
@@ -1155,17 +1250,62 @@ ul {
 .ms-title1 {
     position: fixed;
     font-size: 14px;
-
     width: 300px;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
 }
 
 .ms-title2 {
     position: fixed;
     font-size: 14px;
-
     margin-left: 300px;
-
     width: 300px;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+}
+
+.ys_jy {
+    position: fixed;
+    font-size: 14px;
+    margin-top: 350px;
+    margin-left: 800px;
+    width: 300px;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+}
+
+/* .ys_jy1 {
+   text-indent: 20px;
+} */
+
+.ys_m {
+    position: fixed;
+    font-size: 14px;
+    margin-top: 350px;
+    margin-left: 855px;
+    width: 300px;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+}
+
+.ys_h {
+    position: fixed;
+    font-size: 14px;
+    margin-top: 350px;
+    margin-left: 900px;
+    width: 300px;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
 }
 
 .ms-title0 {
@@ -1230,7 +1370,7 @@ ul {
 .radio_ys {
     position: fixed;
     font-size: 18px;
-    margin-top: 360px;
+    margin-top: 400px;
     margin-left: 800px;
 }
 
@@ -2072,5 +2212,11 @@ ul {
     margin: 0 20px;
     border-style: solid;
     border-color: #d4181c;
+}
+
+.verification-code {
+    width: 100px;
+    height: 60px;
+    margin-left: 600px;
 }
 </style>
